@@ -16,6 +16,7 @@ load_dotenv()
 # --------------------------------------------------
 # This replaces the manual 'delay'. 
 # It allows 10 requests per minute (0.16 per second) without pausing your script.
+
 rate_limiter = InMemoryRateLimiter(
     requests_per_second=0.15, 
     check_every_n_seconds=0.1, 
@@ -27,13 +28,14 @@ embedding_model = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004"
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash", 
     temperature=0.1,
-    max_retries=3,          # Automatically retries if Google is busy
+    max_retries=3,          
     rate_limiter=rate_limiter 
 )
 
 # --------------------------------------------------
 # 2. Database Loading
 # --------------------------------------------------
+
 print("Loading FAISS index...", flush=True)
 vectorstore = FAISS.load_local(
     "faiss_index",
@@ -50,7 +52,7 @@ prompt = ChatPromptTemplate.from_messages([
     ("human", "{question}"),
 ])
 
-# Removed 'trace_retriever' and 'delay_step' for maximum speed
+
 rag_chain = (
     {
         "context": RunnableLambda(lambda x: x["question"]) | vectorstore.as_retriever(search_kwargs={"k": 3}),
@@ -73,6 +75,7 @@ def get_session_history(session_id: str):
         store[session_id] = InMemoryChatMessageHistory()
     
     # Prune history to last 4 messages to keep token count low
+    
     if len(store[session_id].messages) > 4:
         store[session_id].messages = store[session_id].messages[-4:]
     return store[session_id]
@@ -87,6 +90,7 @@ chat_chain = RunnableWithMessageHistory(
 # --------------------------------------------------
 # 5. Execution Loop
 # --------------------------------------------------
+
 def ask_question(query: str):
     try:
         # Directly invoke without manual countdowns
@@ -96,7 +100,7 @@ def ask_question(query: str):
         )
         print(f"\nAI: {answer}")
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\nError: {e}")
 
 if __name__ == "__main__":
     print("\nREADY (No delays). Type your question.")
@@ -104,4 +108,5 @@ if __name__ == "__main__":
         user_input = input("\nUser: ")
         if user_input.lower() in {"exit", "quit"}: break
         if user_input.strip():
+
             ask_question(user_input)
