@@ -51,7 +51,6 @@ def chat(query, session_id="user_1"):
     # The 'result' contains the full message history of the state
     last_message = result["messages"][-1]
     
-    # 2026 CLEAN WAY: Use .text to get the string, ignoring signatures/metadata
     print(f"\nAgent: {last_message.content if isinstance(last_message.content, str) else last_message.text}")
 
 if __name__ == "__main__":
@@ -59,4 +58,5 @@ if __name__ == "__main__":
     while True:
         u_input = input("\nUser: ")
         if u_input.lower() in ["exit", "quit"]: break
+
         chat(u_input)
