@@ -82,7 +82,7 @@ conversational_rag = RunnableWithMessageHistory(
 # 5. The User Loop
 # --------------------------------------------------
 def start_chat():
-    print("--- FIXED CONVERSATIONAL MULTI-QUERY RAG ---")
+    print("--- CONVERSATIONAL MULTI-QUERY RAG ---")
     session_id = "user_001"
     
     while True:
@@ -97,4 +97,5 @@ def start_chat():
         print(f"\nAI: {response}")
 
 if __name__ == "__main__":
+
     start_chat()
