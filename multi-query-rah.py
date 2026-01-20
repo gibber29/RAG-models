@@ -26,7 +26,7 @@ llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
 embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
 vectorstore = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
 
-# 2. Multi-Query Logic (Remains the same)
+# 2. Multi-Query Logic 
 def get_expanded_docs(inputs):
     question = inputs["question"]
     # Single call to expand queries
@@ -99,3 +99,4 @@ def start_chat():
 if __name__ == "__main__":
 
     start_chat()
+
