@@ -103,10 +103,11 @@ def ask_question(query: str):
         print(f"\nError: {e}")
 
 if __name__ == "__main__":
-    print("\nREADY (No delays). Type your question.")
+    print("\n--- BASIC RAG ACTIVE ---")
     while True:
         user_input = input("\nUser: ")
         if user_input.lower() in {"exit", "quit"}: break
         if user_input.strip():
 
             ask_question(user_input)
+
