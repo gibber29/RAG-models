@@ -54,9 +54,10 @@ def chat(query, session_id="user_1"):
     print(f"\nAgent: {last_message.content if isinstance(last_message.content, str) else last_message.text}")
 
 if __name__ == "__main__":
-    print("--- Robust Conversational RAG Active ---")
+    print("--- Robust Conversational ReAct RAG Active ---")
     while True:
         u_input = input("\nUser: ")
         if u_input.lower() in ["exit", "quit"]: break
 
         chat(u_input)
+
